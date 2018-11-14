@@ -8,7 +8,7 @@ class Ping extends Command {
     }
 
     async run (msg) {
-        let code = msg.content.split(/\s+/).slice(0).join(' ').replace(/^```(js|javascript ?\n)?|```$/gi, '')
+        let code = msg.content.split(/\s+/).slice(1).join(' ').replace(/^```(js|javascript ?\n)?|```$/gi, '')
         let ins  = e => typeof e === 'string' ? e : util.inspect(e, { depth: 1 })
         let encodeblock = arg => `\`\`\`js\n${arg}\n\`\`\``
 
@@ -32,7 +32,7 @@ class Ping extends Command {
             msg.channel.send(encodeblock(message))
         } catch (error) {
             console.error(error)
-            
+
             msg.channel.send(encodeblock(error))
                 .catch(console.error)
         }
