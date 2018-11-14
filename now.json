@@ -2,9 +2,10 @@
     "name": "landfulbot",
     "alias": "landfulbot.now.sh",
     "scale": {
-        "gru1": {
+        "sfo1": {
             "min": 1,
             "max": "auto"
         }
-    }
+    },
+    "version": 1
 }
