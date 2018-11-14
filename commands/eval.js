@@ -1,4 +1,5 @@
 const { Command } = require('../utils/')
+const util = require('util')
 
 class Ping extends Command {
     constructor (name, client) {
