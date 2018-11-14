@@ -4,8 +4,13 @@ node_js:
 cache:
   directories:
     - "node_modules"
-script: npm install now --no-save
-jobs:
-  include:
-    - stage: deploy
-      script: bash ./travis/deploy.sh
+before_deploy: npm install now --no-save
+deploy:
+  - provider: script
+    script: bash ./travis/deploy.sh
+    skip_cleanup: true
+    on:
+      all_branches: true
+      master: true
+notifications:
+  email: false
