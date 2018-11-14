@@ -1,13 +1,13 @@
-const { Command } = require('../utils/');
+const { Command } = require('../utils/')
 
 class Ping extends Command {
-    constructor(name, client) {
-        super(name, client);
+    constructor (name, client) {
+        super(name, client)
     }
 
-    run(message) {
-        return message.channel.send(`:ping_pong: | Pong!`);
+    run (message) {
+        return message.channel.send(`:ping_pong: | Pong!`)
     }
 }
 
-module.exports = Ping;
+module.exports = Ping

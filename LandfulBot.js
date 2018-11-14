@@ -1,58 +1,55 @@
-const { Client, Collection } = require("discord.js");
-const Fs = require("fs");
+const { Client, Collection } = require('discord.js')
+const Fs = require('fs')
 
 class LandfulBot extends Client {
-    constructor(config, options = {}) {
-        super(options);
+    constructor (config, options = {}) {
+        super(options)
         
-        this.prefixes = Array.isArray(config.prefixes) ? config.prefixes : [config.prefixes];
-        this.mentionPrefix = config.mentionPrefix || true;
-        this.commands = new Collection();
-
+        this.prefixes = Array.isArray(config.prefixes) ? config.prefixes : [config.prefixes]
+        this.mentionPrefix = config.mentionPrefix || true
+        this.commands = new Collection()
     }
 
-    initCommands(path) {
+    initCommands (path) {
         Fs.readdirSync(path)
             .forEach(file => {
-                try{
-                    let filePath = path + '/' + file;
+                try {
+                    let filePath = path + '/' + file
                     if (file.endsWith('.js')) {
-                        let Command = require(filePath);
-                        let commandName = file.replace(/.js/g, '');
-                        return this.commands.set(commandName, new Command(commandName, this));
+                        let Command = require(filePath)
+                        let commandName = file.replace(/.js/g, '')
+                        return this.commands.set(commandName, new Command(commandName, this))
                     }
 
-                    let stats = Fs.lstatSync(filePath);
+                    let stats = Fs.lstatSync(filePath)
                     if (stats.isDirectory()) {
-                        this.initCommands(filePath);
+                        this.initCommands(filePath)
                     }
-                } catch(error) {
-                    console.error(error);
+                } catch (error) {
+                    console.error(error)
                 }
-            });
+            })
     } 
-
     
-    initListeners(path) {
+    initListeners (path) {
         Fs.readdirSync(path)
             .forEach(file => {
-                try{
-                    let filePath = path + '/' + file;
+                try {
+                    let filePath = path + '/' + file
                     if (file.endsWith('.js')) {
-                        let Listener = require(filePath);
-                        this.on(file.replace(/.js/g, ''), Listener);
+                        let Listener = require(filePath)
+                        this.on(file.replace(/.js/g, ''), Listener)
                     }
 
-                    let stats = Fs.lstatSync(filePath);
+                    let stats = Fs.lstatSync(filePath)
                     if (stats.isDirectory()) {
-                        this.initListeners(filePath);
+                        this.initListeners(filePath)
                     }            
-                } catch(error) {
-                    console.error(error);
+                } catch (error) {
+                    console.error(error)
                 }
-            });
+            })
     }
-
 }
 
-module.exports = LandfulBot;
+module.exports = LandfulBot
