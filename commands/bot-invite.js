@@ -1,7 +1,7 @@
 const { Command } = require('../utils/');
 const { MessageEmbed } = require('discord.js');
 
-class Ping extends Command {
+class Invite extends Command {
     constructor(name, client) {
         super(name, client);
         this.argsRequired = true;
@@ -26,4 +26,4 @@ class Ping extends Command {
     }
 }
 
-module.exports = Ping;
+module.exports = Invite;
