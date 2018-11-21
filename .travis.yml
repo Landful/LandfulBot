@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - "node"
+cache:
+  directories:
+    - "node_modules"
+deploy:
+  - provider: script
+    script: bash ./travis/deploy.sh
+    skip_cleanup: true
+    on:
+      all_branches: true
+      master: true
+notifications:
+  email: false

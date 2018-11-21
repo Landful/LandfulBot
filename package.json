@@ -1,0 +1,23 @@
+{
+  "name": "landfulbot",
+  "version": "1.0.0",
+  "description": "The Landful Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tsugami/LandfulBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tsugami/LandfulBot/issues"
+  },
+  "homepage": "https://github.com/Tsugami/LandfulBot#readme",
+  "dependencies": {
+    "discord.js": "git+https://github.com/discordjs/discord.js.git#master",
+    "dotenv": "^6.1.0"
+  }
+}
