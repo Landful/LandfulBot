@@ -1,3 +1,4 @@
+const { STAFF_ROLE } = require('./Constants.js');
 class Command {
     constructor(name, client) {
         this.name = name;
@@ -6,6 +7,7 @@ class Command {
         this.category = 'normal';
         this.argsRequired = false;
         this.usage = '';
+        this.adminOnly = false;
 
         this.invalidArgsMessage = '';
     }
@@ -15,6 +17,9 @@ class Command {
     }
 
     process(message, args) {
+        if (this.adminOnly && !(message.guild && message.member.roles.has(STAFF_ROLE)))
+            return;
+
         if (this.argsRequired && args.length === 0)
             return typeof this.invalidArgsMessage === 'function' ? this.invalidUsageMessage(message, args) : message.channel.send(this.invalidArgsMessage);
         return this.run(message, args);

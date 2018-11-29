@@ -1,7 +1,7 @@
 const { Command } = require('../utils/')
 const util = require('util')
 
-class Ping extends Command {
+class Eval extends Command {
     constructor (name, client) {
         super(name, client)
 
@@ -40,4 +40,4 @@ class Ping extends Command {
     }
 }
 
-module.exports = Ping
+module.exports = Eval
