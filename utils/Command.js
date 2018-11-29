@@ -17,7 +17,7 @@ class Command {
     }
 
     process(message, args) {
-        if (this.adminOnly && !message.member.roles.get(STAFF_ROLE))
+        if (this.adminOnly && !(message.guild && message.member.roles.has(STAFF_ROLE)))
             return;
 
         if (this.argsRequired && args.length === 0)
