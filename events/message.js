@@ -1,3 +1,4 @@
+const { Constants } = require('../utils');
 module.exports = async function onMessage (message) {
     let args = message.content.split(' ')
     let prefix = this.prefixes.find(prefix => message.content.startsWith(prefix))
@@ -9,5 +10,12 @@ module.exports = async function onMessage (message) {
         if (command) {
             command.process(message, args.slice(1))
         }
+    }
+
+    let messages = message.channel.messages.fetch({limit: 3});
+    if (messages.every(m => m.includes('hm') && !m.bot)) {
+        let Villager = await message.channel.createWebhook('Villager', { avatar: Constants.VILLAGER_PNG });
+        await Villager.send('hm');
+        await Villager.delete();
     }
 }
