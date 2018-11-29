@@ -1,4 +1,5 @@
 const { Constants } = require('../utils');
+
 module.exports = async function onMessage (message) {
     let args = message.content.split(' ')
     let prefix = this.prefixes.find(prefix => message.content.startsWith(prefix))
@@ -13,9 +14,12 @@ module.exports = async function onMessage (message) {
     }
 
     let messages = await message.channel.messages.fetch({limit: 3});
-    let first = message.first();
-    if (messages.every((m, i) => m.toLowerCase().includes('hm') && !m.bot && (first.id !== i && m.author.id !== first.author.id))) {
-        let Villager = await message.channel.createWebhook('Villager', { avatar: Constants.VILLAGER_PNG });
+    let { author, id } = messages.first();
+    
+    if (messages.every((m) => m.content.toLowerCase().includes('hm') && 
+        !m.author.bot && (id === m.id || m.author.id !== author.id))) {
+
+        const Villager = await message.channel.createWebhook('Villager', { avatar: Constants.VILLAGER_PNG });
         await Villager.send('hm');
         await Villager.delete();
     }

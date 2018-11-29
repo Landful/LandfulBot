@@ -7,7 +7,10 @@ class LandfulBot extends Client {
         
         this.prefixes = Array.isArray(config.prefixes) ? config.prefixes : [config.prefixes]
         this.mentionPrefix = config.mentionPrefix || true
-        this.commands = new Collection()
+        this.commands = new Collection();
+
+        this.initCommands('./commands');
+        this.initListeners('./events');
     }
 
     initCommands (path) {
