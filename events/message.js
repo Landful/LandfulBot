@@ -13,7 +13,8 @@ module.exports = async function onMessage (message) {
     }
 
     let messages = await message.channel.messages.fetch({limit: 3});
-    if (messages.every(m => m.toLowerCase().includes('hm') && !m.bot && m.author.id === messages.first().author.id)) {
+    let first = message.first();
+    if (messages.every((m, i) => m.toLowerCase().includes('hm') && !m.bot && (first.id !== i && m.author.id !== first.author.id))) {
         let Villager = await message.channel.createWebhook('Villager', { avatar: Constants.VILLAGER_PNG });
         await Villager.send('hm');
         await Villager.delete();
