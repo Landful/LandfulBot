@@ -6,4 +6,6 @@ module.exports = {
     MEMBERS_ROLE: "493619491457073164",
     
     VILLAGER_PNG: './src/image/villager-face.png'
+
+
 }
