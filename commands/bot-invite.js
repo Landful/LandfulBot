@@ -5,7 +5,7 @@ class Invite extends Command {
     constructor(name, client) {
         super(name, client);
         this.argsRequired = true;
-        this.aliases = ['invite'];
+        this.aliases = ['invite', 'bot-i', 'bi'];
         this.usage = '[IDs]';
         this.invalidArgsMessage = `Preciso do ID do bot. \`${this.tag}\``;
     }
