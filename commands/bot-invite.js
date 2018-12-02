@@ -11,7 +11,13 @@ class Invite extends Command {
     }
 
     async run(message, args) {
-        let bots = (await Promise.all(args.map(id => this.client.users.fetch(id)))).filter(u => u.bot);
+        let ids = args.join(' ').match(/\d{17,19}/g);
+
+        if (!ids)
+            return message.channel.send(this.invalidArgsMessage);
+
+        let bots = (await Promise.all(ids.map(id => this.client.users.fetch(id).catch(() => null))))
+            .filter(user => user && user.bot);
 
         if (bots.length === 0)
             return message.channel.send(this.invalidArgsMessage);
