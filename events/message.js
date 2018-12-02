@@ -26,4 +26,8 @@ module.exports = async function onMessage (message) {
         console.log('foi')
         await Villager.delete();
     }
+
+    if (message.content.toLowerCase().includes('corno'))
+        message.react('🐃');
+        
 }
