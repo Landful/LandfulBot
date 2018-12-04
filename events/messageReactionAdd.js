@@ -11,6 +11,8 @@ module.exports = async function onMessageReactionAdd (reaction) {
         let embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.avatarURL())
             .setDescription(message.content)
+            .addField('Canal', message.channel, true)
+            .addField('Mensagem', `[Pular](${message.id})`)
             .setImage(image ? image.url : null)
             .setColor('GOLD')
         let msg
@@ -20,12 +22,12 @@ module.exports = async function onMessageReactionAdd (reaction) {
                 .fetch({ limit: 200 })
                 .find(m => 
                     m.embeds[0] && 
-                    m.embeds[0].author &&
-                    m.embeds[0].author.url.includes(message.id))
+                    m.embeds[0].fields.length > 1 &&
+                    m.embeds[0].fields[1].value.includes(message.id))
 
         if (!msg)
             await channel.send(`${emoji} ${users.size}`, embed)
         else
-            msg.edit(`${emoji} ${users.size} - ${message.url}`, embed)
+            msg.edit(`${emoji} ${users.size}`, embed)
     }
 }
