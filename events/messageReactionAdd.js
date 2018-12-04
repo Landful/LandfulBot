@@ -9,10 +9,10 @@ module.exports = async function onMessageReactionAdd (reaction) {
         let channel = message.guild.channels.get('519526821214289950')
         let image = Object.values(message.embeds[0] || {}).filter(k => k).find(r => r.url)
         let embed = new MessageEmbed()
-            .setAuthor(message.author.username, message.author.avatarURL(), message.url)
+            .setAuthor(message.author.username, message.author.avatarURL())
             .setDescription(message.content)
             .setImage(image ? image.url : null)
-            .setColor('YELLOW')
+            .setColor('GOLD')
         let msg
 
         if (users.size > 1)
@@ -26,6 +26,6 @@ module.exports = async function onMessageReactionAdd (reaction) {
         if (!msg)
             await channel.send(`${emoji} ${users.size}`, embed)
         else
-            msg.edit(`${emoji} ${users.size}`, embed)
+            msg.edit(`${emoji} ${users.size} - ${message.url}`, embed)
     }
 }
