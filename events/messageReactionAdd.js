@@ -20,10 +20,12 @@ module.exports = async function onMessageReactionAdd (reaction) {
         if (users.size > 1)
             msg = await channel.messages
                 .fetch({ limit: 200 })
-                .find(m => 
-                    m.embeds[0] && 
-                    m.embeds[0].fields.length > 1 &&
-                    m.embeds[0].fields[1].value.includes(message.id))
+                .then(m =>
+                    m.find(m => 
+                        m.embeds[0] && 
+                        m.embeds[0].fields.length > 1 &&
+                        m.embeds[0].fields[1].value.includes(message.id))
+                )
 
         if (!msg)
             await channel.send(`${emoji} ${users.size}`, embed)
