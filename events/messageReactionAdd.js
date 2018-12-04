@@ -19,7 +19,7 @@ module.exports = async function onMessageReactionAdd (reaction) {
 
         if (users.size > 1)
             msg = await channel.messages
-                .fetch({ limit: 200 })
+                .fetch({ limit: 100 })
                 .then(m =>
                     m.find(m => 
                         m.embeds[0] && 
