@@ -12,7 +12,7 @@ module.exports = async function onMessageReactionAdd (reaction) {
             .setAuthor(message.author.username, message.author.avatarURL())
             .setDescription(message.content)
             .addField('Canal', message.channel, true)
-            .addField('Mensagem', `[Pular](${message.id})`)
+            .addField('Mensagem', `[Pular](${message.url})`, true)
             .setImage(image ? image.url : null)
             .setColor('GOLD')
         let msg
