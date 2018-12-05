@@ -1,4 +1,5 @@
 module.exports = {
     Command: require('./Command.js'),
-    Constants: require('./Constants')
+    Constants: require('./Constants'),
+    Starboard: require('./Starboard')
 }
