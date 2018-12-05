@@ -23,11 +23,8 @@ module.exports = async function onMessage (message) {
 
         const Villager = await message.channel.createWebhook('Villager', { avatar: Constants.VILLAGER_PNG });
         await Villager.send('hm');
-        console.log('foi')
         await Villager.delete();
     }
 
-    if (message.content.toLowerCase().includes('corno'))
-        message.react('🐃');
         
 }
