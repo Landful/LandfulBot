@@ -1,15 +1,18 @@
 const { MessageEmbed } = require('discord.js')
+const { Constants } = require('../utils/')
+const { STARBOARD_EMOJIS: emojis } = Constants
 
-const emojis = ['\u2B50', '\u1F31F', '\u1F320']
+module.exports = async function onMessageReactionAdd ({ emoji, message, users }) {
+    if (message.author.bot)
+        return
 
-module.exports = async function onMessageReactionAdd (reaction) {
-    if (reaction.emoji.name === '\u2B50') { // star emoji
-        let { message, users } = reaction
+    if (emoji.name === emojis[0]) {
+        users = users.filter(user => !user.bot);
         let emoji = users.size >= 1 ? emojis[0] : users.size >= 5 ? emojis[1] : emojis[2]
-        let channel = message.guild.channels.get('519526821214289950')
+        let channel = message.guild.channels.get(Constants.STARBOARD_ID)
         let image = Object.values(message.embeds[0] || {}).filter(k => k).find(r => r.url)
         let embed = new MessageEmbed()
-            .setAuthor(message.author.username, message.author.avatarURL())
+            .setAuthor(message.author.username, message.author.displayAvatarURL())
             .setDescription(message.content)
             .addField('Canal', message.channel, true)
             .addField('Mensagem', `[Pular](${message.url})`, true)
