@@ -1,11 +1,11 @@
 const { MessageEmbed } = require('discord.js')
-const { STARBOARD_EMOJIS: emojis, STARBOARD_ID } = require('./Constants.js')
+const { STARBOARD_EMOJIS: emojis } = require('./Constants.js')
 
 class Starboard {
     static async check (message, users) {
         let _message = message
         let _users = users.filter(u => !u.bot)
-        let channel = _message.client.channels.get(STARBOARD_ID)
+        let channel = _message.client.channels.get(process.env.STARBOARD_ID)
 
         let msg = await channel.messages
             .fetch({ limit: 100 })

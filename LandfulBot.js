@@ -2,11 +2,11 @@ const { Client, Collection } = require('discord.js')
 const Fs = require('fs')
 
 class LandfulBot extends Client {
-    constructor (config, options = {}) {
+    constructor (options = {}) {
         super(options)
         
-        this.prefixes = Array.isArray(config.prefixes) ? config.prefixes : [config.prefixes]
-        this.mentionPrefix = config.mentionPrefix || true
+        this.prefixes = [process.env.PREFIX]
+        this.mentionPrefix = true
         this.commands = new Collection()
 
         this.initCommands('./commands')

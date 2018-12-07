@@ -1,4 +1,3 @@
-const { STAFF_ROLE } = require('./Constants.js')
 const { MessageEmbed } = require('discord.js')
 class Command {
     constructor (name, client) {
@@ -22,7 +21,7 @@ class Command {
     }
 
     process (message, args) {
-        if (this.adminOnly && !(message.guild && message.member.roles.has(STAFF_ROLE)))
+        if (this.adminOnly && !(message.guild && message.member.roles.has(process.env.STAFF_ROLE)))
             return
 
         if (this.argsRequired && args.length === 0)
