@@ -19,9 +19,10 @@ class LandfulBot extends Client {
                 try {
                     let filePath = path + '/' + file
                     if (file.endsWith('.js')) {
-                        let Command = require(filePath)
-                        let commandName = file.replace(/.js/g, '')
-                        return this.commands.set(commandName, new Command(commandName, this))
+                        const Command = require(filePath)
+                        const commandName = file.replace(/.js/g, '').toLowerCase()
+                        const command = new Command(commandName, this)
+                        return this.commands.set(commandName, command)
                     }
 
                     let stats = Fs.lstatSync(filePath)

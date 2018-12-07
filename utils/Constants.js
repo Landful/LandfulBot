@@ -6,7 +6,7 @@ module.exports = {
     MEMBERS_ROLE: "493619491457073164",
 
     // channels ids
-    STARBOARD_ID: '519526821214289950',
+    STARBOARD_ID: '356270085566103563',
     
     // files
     VILLAGER_PNG: './src/image/villager-face.png',
