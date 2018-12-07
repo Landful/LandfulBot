@@ -12,9 +12,8 @@ class GitHub {
     }
 
     static getUser (username) {
-        let userUrl = `${URL}/users/${username}`
         return new Promise((resolve, reject) => {
-            this._requestJSON(userUrl)
+            this._requestJSON(`/users/${username}`)
                 .then(data => {
                     if (data.message)
                         reject(data)

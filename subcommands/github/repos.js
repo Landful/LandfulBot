@@ -10,10 +10,16 @@ class Repos extends Command {
         this.argsRequired = true
     }
 
-    async run(message, [name]) {
+    async run(message, [name, repo = ""]) {
         try {
+            
             let user = await Github.getUser(name)
-            let repos = await Github._requestJSON(user.url + '/repos')
+            let repos = await Github._requestJSON(user.url + '/repos', false)
+
+
+            if (repos.map(a=> a.name.toLowerCase()).includes(repo.toLowerCase()))
+                return this.client.commands.get("github").subcommands.find(a=> a.name == 'repo').run(message, [name, repo])
+
             let forks = repos.filter(repo => repo.fork)
             let created = repos.filter(repo => !repo.fork)
             let embed = new MessageEmbed()
@@ -35,7 +41,7 @@ class Repos extends Command {
         message.channel.send(embed)
 
         } catch (err) {
-            message.channel.send('ERROR: ' + err.message)
+            message.channel.send('ERROR')
             console.log(err)
         }
     }

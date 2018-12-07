@@ -47,7 +47,7 @@ class User extends Command {
 
             message.channel.send(embed)
         } catch (err) {
-            message.channel.send('ERROR: ' + err.message)
+            message.channel.send('ERROR')
             console.log(err)
         }
     }

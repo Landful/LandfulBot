@@ -65,7 +65,7 @@ class Repo extends Command {
 
             message.channel.send(embed)
         } catch (error) {
-            message.channel.send('ERROR: ' + error.message)
+            message.channel.send('ERROR')
             console.log(error)
         }
     }
