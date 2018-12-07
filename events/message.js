@@ -1,4 +1,4 @@
-const { Constants } = require('../utils');
+const { Constants } = require('../utils')
 
 module.exports = async function onMessage (message) {
     let args = message.content.split(' ')
@@ -13,18 +13,15 @@ module.exports = async function onMessage (message) {
         }
     }
 
-    const messages = message.channel.messages.last(3);
+    const messages = message.channel.messages.last(3)
     const validContent = messages.filter((m) => 
-         !m.author.bot &&
-         m.content.toLowerCase().includes('hm')).map(m => m.author.id);
-    const validAuthors = validContent.every((e, i, a) => a.indexOf(e) === i);
-  
+        !m.author.bot &&
+        m.content.toLowerCase().includes('hm')).map(m => m.author.id)
+    const validAuthors = validContent.every((e, i, a) => a.indexOf(e) === i)
+
     if (validAuthors && validContent.length === 3) {
-
-        const Villager = await message.channel.createWebhook('Villager', { avatar: Constants.VILLAGER_PNG });
-        await Villager.send('hm');
-        await Villager.delete();
-    }
-
-        
+        const Villager = await message.channel.createWebhook('Villager', { avatar: Constants.VILLAGER_PNG })
+        await Villager.send('hm')
+        await Villager.delete()
+    }        
 }
