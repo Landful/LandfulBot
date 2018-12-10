@@ -8,7 +8,7 @@ class Minecraft extends Command {
     run(message, args) {
         let embed = new MessageEmbed()
         .setTitle('Minecraft')
-        .setDescription('O comando de minecraft faz com que você possa ver sua skin, o avatar de sua skin entre outros...')
+        .setDescription('O comando de minecraft faz com que você possa ver sua skin, o avatar de sua skin entre outros...\nOpções: `skin, body,avatar e head`')
         .setColor('RANDOM')
 
         if(!args[0] || args[0] == 'help') return message.reply(embed)
