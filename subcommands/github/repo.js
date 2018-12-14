@@ -25,7 +25,7 @@ class Repo extends Command {
             let branches = await Github._requestJSON(repo.url + '/branches', false)
             let commits = await Github._requestJSON(repo.url + '/commits', false)
 
-            let v = (msg, url, i = 0) => `[${msg}](${ i === 0 ? `${repo.html_url}/${url}` : url})`
+            let v = (msg, url, i = 0) => `[${msg}](${i === 0 ? `${repo.html_url}/${url}` : url})`
 
             let embed = new MessageEmbed()
                 .setColor('RANDOM')

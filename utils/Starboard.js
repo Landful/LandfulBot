@@ -15,13 +15,14 @@ class Starboard {
                     m.embeds[0].fields.length > 1 &&
                     m.embeds[0].fields[1].value.includes(_message.id))   
             )
-
-        if (!msg)
+        
+        if (msg)
+            if (_users.size !== 0) 
+                return msg.edit(`${this.getEmoji(_users)} ${_users.size}`, this.createEmbed(_message))
+            else
+                return msg.delete()
+        else if (_users.size > 0)
             return channel.send(`${this.getEmoji(_users)} ${_users.size}`, this.createEmbed(_message))
-        else if (_users.size === 0)
-            return msg.delete()
-        else 
-            return msg.edit(`${this.getEmoji(_users)} ${_users.size}`, this.createEmbed(_message))
     }
 
     static getEmoji (users) {
