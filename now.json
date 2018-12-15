@@ -7,5 +7,9 @@
             "max": 1
         }
     },
-    "version": 1
+    "env": {
+        "TOKEN": "@token",
+        "GITHUB_TOKEN": "@github-token"
+    },
+    "version": 2
 }
