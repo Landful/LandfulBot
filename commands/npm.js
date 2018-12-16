@@ -11,22 +11,23 @@ class Npm extends Command {
     async run (msg, args) {
         let query = args.join(' ').toLowerCase()
 
-        msg.channel.startTyping()
         ApiNpm.getdetails(query, (data) => {
             if (data.error === 'Not found')
-                return msg.channel.send('esse npm não existe')
+                return msg.channel.send('Pacote não encontrado')
 
             let embed = new MessageEmbed()
                 .setColor('RED')
                 .setTitle(data.name)
                 .setDescription(`${data.description || ''}\nhttps://www.npmjs.com/package/${data.name}`)
-                .addField('Versão', data['dist-tags'].latest)
                 .setThumbnail('attachment://image.png')
+
+            if (data['dist-tags'])
+                embed.addField('Versão', data['dist-tags'].latest)
 
             msg.channel.send({
                 embed: embed,
                 files: [new MessageAttachment(Constants.NPM_PNG, 'image.png')]
-            }).then(() => msg.channel.stopTyping())
+            })
         }) 
     }
 }
