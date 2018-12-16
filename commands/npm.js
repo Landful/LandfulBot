@@ -9,11 +9,11 @@ class Npm extends Command {
     }
 
     async run (msg, args) {
-        let query = args.join(' ')
+        let query = args.join(' ').toLowerCase()
 
         msg.channel.startTyping()
         ApiNpm.getdetails(query, (data) => {
-            if (!data)
+            if (data.error === 'Not found')
                 return msg.channel.send('esse npm não existe')
 
             let embed = new MessageEmbed()
