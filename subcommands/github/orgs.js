@@ -5,7 +5,7 @@ class Orgs extends Command {
     constructor (name, client) {
         super(name, client)
         this.aliases = ['os']
-        this.description = 'As Organizações de um usuário'
+        this.description = 'As organizações de um usuário'
     }
 
     async run (message, [username]) {
