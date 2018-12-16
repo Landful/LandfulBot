@@ -6,7 +6,7 @@ class Repo extends Command {
         super(name, client)
         this.aliases = ['r']
         this.argsRequired = true
-        this.description = 'informações de um repositório'
+        this.description = 'Informações de um repositório'
         this.usage = '[username] [repo]'
     }
 
