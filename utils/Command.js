@@ -10,7 +10,7 @@ class Command {
         this.usage = ''
         this.adminOnly = false
         this.subcommandsOnly = false
-        this.invalidArgsMessage = ''
+        this.invalidArgsMessage = 'Erro; Argumentos inválidos'
 
         this.subcommands = []
         this.examples = []
