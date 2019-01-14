@@ -1,4 +1,4 @@
-const { Client, Collection } = require('discord.js')
+const { Client, Collection, MessageEmbed } = require('discord.js')
 const Fs = require('fs')
 
 class LandfulBot extends Client {
@@ -70,6 +70,17 @@ class LandfulBot extends Client {
                     console.error(error)
                 }
             })
+    }
+
+    sendLoggerError (error) {
+        console.log(error)
+        let embed = new MessageEmbed()
+            .setColor('RED')
+            .setTitle(error.name)
+            .setAuthor(this.user.username, this.user.displayAvatarURL())
+            .addDescription(error.message)
+            .addField('Arquivo', `${error.fileName} ${error.lineNumber}`)
+        return this.channels.get(process.env.LOG_ERROR).send(embed)
     }
 }
 
