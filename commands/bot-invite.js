@@ -5,27 +5,27 @@ class Invite extends Command {
     constructor (name, client) {
         super(name, client)
         this.argsRequired = true
-        this.aliases = ['invite', 'bot-i', 'bi']
+        this.aliases = ['invite', 'bot-i', 'b-invite', 'bin']
         this.usage = '[IDs]'
-        this.invalidArgsMessage = `Preciso do ID do bot. \`${this.tag}\``
     }
 
     async run (message, args) {
-        let ids = args.join(' ').match(/\d{17,19}/g)
+        const invalidArgsMessage = `Preciso do ID do bot. ${message.prefix + this.name} ${this.usage}`
+        const ids = args.join(' ').match(/\d{17,19}/g)
 
         if (!ids)
-            return message.channel.send(this.invalidArgsMessage)
+            return message.channel.send(invalidArgsMessage)
 
-        let bots = (await Promise.all(ids.map(id => this.client.users.fetch(id).catch(() => null))))
+        const bots = (await Promise.all(ids.map(id => this.client.users.fetch(id).catch(() => null))))
             .filter(user => user && user.bot)
 
         if (bots.length === 0)
-            return message.channel.send(this.invalidArgsMessage)
+            return message.channel.send(invalidArgsMessage)
 
-        let embed = new MessageEmbed()
+        const embed = new MessageEmbed()
             .setColor('RANDOM')
             .setAuthor('Convites')
-            .setDescription(bots.map(bot => `[${bot.username}](https://discordapp.com/oauth2/authorize?&client_id=${bot.id}&scope=bot)`).join('\n'))
+            .setDescription(bots.map(bot => `[${bot.tag}](https://discordapp.com/oauth2/authorize?&client_id=${bot.id}&scope=bot)`).join('\n'))
 
         message.channel.send(embed)
     }
