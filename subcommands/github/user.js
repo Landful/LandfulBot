@@ -10,7 +10,7 @@ class User extends Command {
         this.aliases = ['u']
         this.description = 'usúario do github'
         this.usage = '[username]'
-        this.invalidArgsMessage = `Preciso do username do usúario. \`${this.tag}\``
+        this.invalidArgsMessage = `Preciso do username do usúario.`
     }
 
     async run (message, [name]) {

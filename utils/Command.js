@@ -19,7 +19,6 @@ class Command {
     process (message, args) {
         if (this.adminOnly && !(message.guild && message.member.roles.has(process.env.STAFF_ROLE)))
             return
-
         if (this.argsRequired && args.length === 0)
             return typeof this.invalidArgsMessage === 'function' ? this.invalidUsageMessage(message, args) : message.channel.send(this.invalidArgsMessage)
         
@@ -34,10 +33,11 @@ class Command {
     }
 
     embedHelpSUBS (message) {
+        const tag = `${message.prefix + this.name} ${this.usage}`
         return new MessageEmbed()
             .setAuthor(this.client.user.username, this.client.user.displayAvatarURL)
             .setTitle('SubComandos')
-            .setDescription(this.subcommands.map((c) => `\`${this.tag} ${c.name} ${c.usage}\` ${c.description}`).join('\n'))
+            .setDescription(this.subcommands.map((c) => `\`${tag} ${c.name} ${c.usage}\` ${c.description}`).join('\n'))
             .setFooter(message.author.tag, message.author.displayAvatarURL())
             .setColor('RANDOM')
             .setTimestamp(new Date())

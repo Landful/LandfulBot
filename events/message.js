@@ -1,15 +1,18 @@
 const { Constants } = require('../utils')
 
 module.exports = async function onMessage (message) {
-    const args = message.content.split(' ')
     const botMention = message.guild ? message.guild.me.toString() : this.user.toString()
     const prefix = message.content.startsWith(botMention) ? `${botMention} ` : (message.content.startsWith(process.env.PREFIX) ? process.env.PREFIX : null)
-    
     if (prefix) {
-        const name =  prefix.includes(this.user.id) ? args[1] : args[0].slice(prefix.length)
+        const args = message.content.slice(prefix.length).trim().split(' ')
+        const name = args.shift()
         const command = this.commands.find(command => command.name === name || command.aliases.includes(name))
+        Object.defineProperties(message, {
+            'prefix': { value: prefix },
+            'command': { value: prefix }
+        })
         if (command) {
-            command.process(message, args.slice(1))
+            command.process(message, args)
         }
     }
 
