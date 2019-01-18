@@ -4,9 +4,7 @@ const Fs = require('fs')
 class LandfulBot extends Client {
     constructor (options = {}) {
         super(options)
-        
-        this.prefixes = [process.env.PREFIX]
-        this.mentionPrefix = true
+
         this.commands = new Collection()
 
         this.initCommands('./commands')
