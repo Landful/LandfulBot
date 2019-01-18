@@ -16,10 +16,6 @@ class Command {
         this.examples = []
     }
 
-    get tag () {
-        return `${this.client.prefixes[0]}${this.name} ${this.usage}`
-    }
-
     process (message, args) {
         if (this.adminOnly && !(message.guild && message.member.roles.has(process.env.STAFF_ROLE)))
             return
