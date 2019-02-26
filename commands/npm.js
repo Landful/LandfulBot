@@ -1,6 +1,13 @@
 const { Command, Constants } = require('../utils')
 const { MessageEmbed, MessageAttachment } = require('discord.js')
-const ApiNpm = require('api-npm')
+const fetch = require('node-fetch')
+
+const URL = 'http://registry.npmjs.org'
+const getInfo = async (name) => {
+    return fetch(URL + '/' + name)
+        .then(response => response.json())
+        .then(json => json)
+}
 
 class Npm extends Command {
     constructor (name, client) {
@@ -9,26 +16,22 @@ class Npm extends Command {
     }
 
     async run (msg, args) {
-        let query = args.join(' ').toLowerCase()
+        const query = args.join(' ').toLowerCase()
+        const data = await getInfo(query)
 
-        ApiNpm.getdetails(query, (data) => {
-            if (data.error === 'Not found')
-                return msg.channel.send('Pacote não encontrado')
+        if (data.error) return msg.channel.send('Pacote não encontrado')
 
-            let embed = new MessageEmbed()
-                .setColor('RED')
-                .setTitle(data.name)
-                .setDescription(`${data.description || ''}\nhttps://www.npmjs.com/package/${data.name}`)
-                .setThumbnail('attachment://image.png')
+        const embed = new MessageEmbed()
+            .setColor('RED')
+            .setTitle(data.name)
+            .setDescription(`${data.description || ''}\nhttps://www.npmjs.com/package/${data.name}`)
+            .setThumbnail('attachment://image.png')
+            .attachFiles(new MessageAttachment(Constants.NPM_PNG, 'image.png'))
 
-            if (data['dist-tags'])
-                embed.addField('Versão', data['dist-tags'].latest)
+        if (data['dist-tags'])
+            embed.addField('Versão', data['dist-tags'].latest)
 
-            msg.channel.send({
-                embed: embed,
-                files: [new MessageAttachment(Constants.NPM_PNG, 'image.png')]
-            })
-        }) 
+        msg.channel.send(embed)
     }
 }
 
