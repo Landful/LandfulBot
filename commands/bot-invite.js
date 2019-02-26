@@ -17,7 +17,7 @@ class Invite extends Command {
             return message.channel.send(invalidArgsMessage)
 
         const bots = (await Promise.all(ids.map(id => this.client.users.fetch(id).catch(() => null))))
-            .filter(user => user && user.bot)
+            .filter((user, i, arr) => user && user.bot && (arr.indexOf(user) === i))
 
         if (bots.length === 0)
             return message.channel.send(invalidArgsMessage)
