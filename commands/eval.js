@@ -1,42 +1,53 @@
 const { Command } = require('../utils/')
-const util = require('util')
+const { inspect } = require('util')
 
 class Eval extends Command {
     constructor (name, client) {
         super(name, client)
-
         this.adminOnly = true
+        this.argsRequired = true
+        this.examples = ['this.name']
+        this.invalidArgsMessage = 'Digite um codigo'
+        this.usage = '[code]'
     }
 
-    async run (msg) {
-        let code = msg.content.split(/\s+/).slice(1).join(' ').replace(/^```(js|javascript ?\n)?|```$/gi, '')
-        let ins  = e => typeof e === 'string' ? e : util.inspect(e, { depth: 1 })
-        let encodeblock = arg => `\`\`\`js\n${arg}\n\`\`\``
-
+    async run (msg, args) {
+        let code = args.join(' ').replace(/^```(js|javascript ? \n )?|```$/gi, '')
         try {
-            let result = async (temp) => {
-                if (temp && temp[Symbol.toStringTag] === 'AsyncFunction')
-                    return result(await temp())
-                if (temp && temp instanceof Promise)
-                    return result(await temp)
-
-                return temp
-            }
-
-            let message = ins(await result(eval(code)))
+            console.log(code)
+            let message = await this.result(eval(code))
 
             console.debug('\n' + message)
 
             if (message.length > 2000)
                 message = 'Mensagem muito longa, veja o console'
 
-            msg.channel.send(encodeblock(message))
+            msg.channel.send(await this.clean(message), { code: 'js' })
         } catch (error) {
             console.error(error)
 
-            msg.channel.send(encodeblock(error))
+            msg.channel.send(error.message, { code: 'js' })
                 .catch(console.error)
         }
+    }
+
+    async clean (text) {
+        if (text instanceof Promise || (Boolean(text) && typeof text.then === 'function' && typeof text.catch === 'function'))
+            text = await text
+        if (typeof text !== 'string') 
+            text = inspect(text, { depth: 0, showHidden: false })
+
+        text = text.replace(/`/g, `\`${String.fromCharCode(8203)}`).replace(/@/g, `@${String.fromCharCode(8203)}`)
+        return text
+    }
+
+    async result (temp) {
+        if (temp && temp[Symbol.toStringTag] === 'AsyncFunction')
+            return this.result(await temp())
+        if (temp && temp instanceof Promise)
+            return this.result(await temp)
+
+        return temp
     }
 }
 
