@@ -6,8 +6,6 @@ class Eval extends Command {
         super(name, client)
         this.adminOnly = true
         this.argsRequired = true
-        this.examples = ['this.name']
-        this.invalidArgsMessage = 'Digite um codigo'
         this.usage = '[code]'
     }
 
